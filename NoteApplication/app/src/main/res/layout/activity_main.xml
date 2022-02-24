@@ -8,22 +8,27 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRVNotes"
-        tools:listitem="@layout/note_rv_item"
-        android:background="@color/black_shape_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@color/black_shape_1"
+        tools:listitem="@layout/note_rv_item" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/idFABAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/idFABAddNote"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/black_shape_2"
         android:src="@drawable/ic_add"
         android:tint="@color/white"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/black_shape_2"
-        android:layout_alignParentRight="true"
-        />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="TODO" />
 
 
 

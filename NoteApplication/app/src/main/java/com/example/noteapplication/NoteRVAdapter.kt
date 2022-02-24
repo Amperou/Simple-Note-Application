@@ -1,8 +1,8 @@
 package com.example.noteapplication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -13,44 +13,60 @@ class NoteRVAdapter(
     val noteClickInterface: NoteClickInterface,
     val noteClickDeleteInterface: NoteClickDeleteInterface
     ):RecyclerView.Adapter<NoteRVAdapter.ViewHolder>(){
-    private val allNotes = ArrayList<Note>()
+    private val allNotes = ArrayList<Note>() //variable cotenant la liste des notes
+    //creation de la class view holder
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val noteTV = itemView.findViewById<TextView>(R.id.idTVNoteTitle)
-        val timeTV = itemView.findViewById<TextView>(R.id.idTVTimeStamp)
-        val deleteIV = itemView.findViewById<TextView>(R.id.idIVDelete)
+        //definition et initialisation des variables s'affichant dans la vue
+        val noteTV: TextView = itemView.findViewById<TextView>(R.id.idTVNoteTitle)
+        val timeTV: TextView = itemView.findViewById<TextView>(R.id.idTVTimeStamp)
+        val deleteIV: TextView = itemView.findViewById<TextView>(R.id.idIVDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        //mise en page pour chaque élément du recycle view .
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.note_rv_item, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.noteTV.setText(allNotes.get(position).noteTitle)
-        holder.timeTV.setText("Last Updated: "+allNotes.get(position).timeStanp)
-
+        //setting data to item of recycler view
+        holder.noteTV.text = allNotes[position].noteTitle
+        holder.timeTV.text = "Last Updated: "+ allNotes[position].timestamp
+        //adding click listener to our delete image view icon.
         holder.deleteIV.setOnClickListener{
-            noteClickDeleteInterface.onDeleteIconClick(allNotes.get(position))
+            //calling a note click interface
+            // passing a position to it.
+            noteClickDeleteInterface.onDeleteIconClick(allNotes[position])
         }
+        //Ajout d'un click listner
         holder.itemView.setOnClickListener{
-            noteClickInterface.onNoteClick(allNotes.get(position))
+            //appel de l'interface note de click
+            //passage de la position
+            noteClickInterface.onNoteClick(allNotes[position])
         }
     }
 
     override fun getItemCount(): Int {
+        //retourne la taille de la liste de notes
        return  allNotes.size
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(newList: List<Note>){
+        //Effaçage de la liste des note
         allNotes.clear()
+        //Ajout d'une nouvelle liste de note
         allNotes.addAll(newList)
+        //Notification des changement opéré à l'adaptateur
         notifyDataSetChanged()
     }
 }
 
 interface  NoteClickDeleteInterface{
+    //Action sur le click de l'icone de suppression de note
     fun onDeleteIconClick(note: Note)
 }
 
 interface  NoteClickInterface{
+    //Action sur le click d'une note
     fun onNoteClick(note: Note)
 }
